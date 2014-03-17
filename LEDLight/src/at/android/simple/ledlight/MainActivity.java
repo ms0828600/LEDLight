@@ -19,7 +19,11 @@ import android.widget.Button;
 import android.widget.Toast;
 import at.simple.ledlight.R;
 
-
+/**
+ * 
+ * @author Martin Schliefellner
+ * 
+ */
 public class MainActivity extends Activity implements SurfaceHolder.Callback{
 
 	private Camera _camera;
@@ -72,10 +76,10 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
 		}
 		
 		this._preview = (SurfaceView) findViewById(R.id.preview);
-		this._surfaceHolder = _preview.getHolder();
+		this._surfaceHolder = this._preview.getHolder();
 		this._surfaceHolder.addCallback(this);
 		try {
-			this._camera.setPreviewDisplay(_surfaceHolder);
+			this._camera.setPreviewDisplay(this._surfaceHolder);
 		} catch (IOException e) {
 			e.printStackTrace();
 			this.fallBack(R.string.problem_torchmode);
@@ -187,12 +191,12 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
 	 */
 	private void turnOffFlashLight() {
 		if (this._camera != null) {
-			Parameters parameters = _camera.getParameters();
+			Parameters parameters = this._camera.getParameters();
 			parameters.setFlashMode(Parameters.FLASH_MODE_OFF);
 			this._camera.setParameters(parameters);
 			this._camera.stopPreview();
 			this._isOn = false;
-			_button.setText(R.string.on);
+			this._button.setText(R.string.on);
 		}
 	}
 	
@@ -210,7 +214,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
 		Toast toast = Toast.makeText(getApplicationContext(), messageID, Toast.LENGTH_SHORT);
 		toast.show();
 		if (this._surfaceHolder != null) {
-			_surfaceHolder.removeCallback(this);
+			this._surfaceHolder.removeCallback(this);
 		}
 		setContentView(R.layout.activity_main_whitescreen);		
 	}
@@ -244,7 +248,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
 					this.setFlashLightMode();	
 					Toast toast = Toast.makeText(getApplicationContext(), R.string.toggleScreenMode, Toast.LENGTH_SHORT);
 					toast.show();
-					_button.setText(R.string.on);
+					this._button.setText(R.string.on);
 				}
 				return true;
 			default:
@@ -256,9 +260,9 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
 	}
 
 	public void surfaceCreated(SurfaceHolder holder) {
-		_surfaceHolder = holder;
+		this._surfaceHolder = holder;
 		try {
-			this._camera.setPreviewDisplay(_surfaceHolder);
+			this._camera.setPreviewDisplay(this._surfaceHolder);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -266,7 +270,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		this._camera.stopPreview();
-		_surfaceHolder = null;
+		this._surfaceHolder = null;
 	}
 
 }

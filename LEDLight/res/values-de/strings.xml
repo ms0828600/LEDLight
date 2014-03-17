@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">LED Licht</string>
+    <string name="off">Ausschalten</string>
+    <string name="on">Einschalten</string>
+	<string name="no_flashlight">Kein Blitzlicht gefunden. Schalte Bildschirmfläche weiß.</string>
+	<string name="no_access_cam">Kamera Hardware kann nicht verwendet werden.</string>
+	<string name="problem_torchmode">Blitz kann nicht verwendet werden. Schalte Bildschirmfläche weiß.</string>
+	<string name="toggleScreenMode">Modus geändert</string>
+	
+	<string name="menu_toggle_mode">Ändere Modus</string>
+</resources>

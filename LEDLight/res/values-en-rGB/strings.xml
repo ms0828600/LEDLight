@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">LED Light</string>
+    <string name="off">Switch off</string>
+    <string name="on">Switch on</string>
+    <string name="no_flashlight">No flashlight supported by your device. Turning screen white.</string>
+	<string name="no_access_cam">Camera hardware cannot be accessed.</string>
+	<string name="problem_torchmode">Flashlight cannot be used. Turning screen white.</string>
+	<string name="toggleScreenMode">Mode changed</string>
+	<string name="menu_toggle_mode">Change Mode</string>
+</resources>

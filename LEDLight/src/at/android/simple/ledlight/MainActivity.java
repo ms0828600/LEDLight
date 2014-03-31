@@ -93,7 +93,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
 			this.turnOffFlashLight();
 		}
 		if (this._isFallBack == false && this._surfaceHolder!= null) {
-			_surfaceHolder.removeCallback(this);
+			this._surfaceHolder.removeCallback(this);
 		}
 		this.releaseCamera();
 	}
@@ -134,23 +134,29 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
 	 * @return True if supported, else false
 	 */
 	private boolean hasFlash() {
-		if (this._camera == null) {
-			this._camera = Camera.open();
+		try {
+			if (this._camera == null) {
+				this._camera = Camera.open();
+			}
+			if (this._camera == null) {
+				return false;
+			}
+			// Check if torch mode is supported
+			Parameters parameters = this._camera.getParameters();
+			if (parameters.getFlashMode() == null) {
+				return false;
+			}
+			List<String> supportedFlashModes = parameters.getSupportedFlashModes();
+			if (supportedFlashModes == null || supportedFlashModes.isEmpty() || 
+					supportedFlashModes.size() == 1 && supportedFlashModes.get(0).equals(Camera.Parameters.FLASH_MODE_OFF)) {
+				return false;
+			}
+			return true;
 		}
-		if (this._camera == null) {
+		catch (Exception e) {
+			// fallback
 			return false;
 		}
-		// Check if torch mode is supported
-		Parameters parameters = this._camera.getParameters();
-		if (parameters.getFlashMode() == null) {
-			return false;
-		}
-		List<String> supportedFlashModes = parameters.getSupportedFlashModes();
-		if (supportedFlashModes == null || supportedFlashModes.isEmpty() || 
-				supportedFlashModes.size() == 1 && supportedFlashModes.get(0).equals(Camera.Parameters.FLASH_MODE_OFF)) {
-			return false;
-		}
-		return true;
 	}
 	
 	/**
@@ -174,7 +180,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback{
 			this._camera.setParameters(parameters);
 			this._camera.startPreview();
 			this._isOn = true;
-			_button.setText(R.string.off);
+			this._button.setText(R.string.off);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
